@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qabilet — узнайте, подходит ли вам процедура</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 64'%3E%3Cpath d='M6 28 Q58 2 120 46 Q58 26 6 28 Z' fill='%232E7D58'/%3E%3Cpath d='M234 28 Q182 2 120 46 Q182 26 234 28 Z' fill='%231E3A5F'/%3E%3C/svg%3E">
+<style>
+:root{
+  --blue:#1E3A5F;--green:#2E7D58;--amber:#E8A94A;--mint:#E8F4EE;
+  --ink:#2C2C2A;--ink-soft:#5F5E5A;--line:#DCE4E0;--line-soft:#EDF1EF;--white:#fff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#fff;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.bf{font-family:Onest,Inter,-apple-system,sans-serif}
+.in{max-width:760px;margin:0 auto;padding:0 20px}
+
+/* header */
+.top{background:var(--blue);color:#fff;padding:16px 0;position:sticky;top:0;z-index:40}
+.top .in{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand svg{width:52px;flex:none;display:block}
+.brand .nm{font-family:Onest;font-weight:700;font-size:21px;line-height:1;letter-spacing:-.01em}
+.brand .sb{font-size:11px;color:#AFC0D4;margin-top:2px;line-height:1.3}
+@media(max-width:520px){.brand .sb{display:none}.brand svg{width:42px}}
+.rules{margin:10px 0 0;padding-left:18px}
+.rules li{margin-bottom:7px;line-height:1.55}
+.lang{display:flex;border:1px solid rgba(255,255,255,.3);border-radius:999px;overflow:hidden;flex:none}
+.lang button{background:transparent;border:0;color:#C7D6E6;font-family:Onest;font-weight:600;font-size:12.5px;padding:7px 13px;cursor:pointer}
+.lang button.on{background:#fff;color:var(--blue)}
+
+/* hero */
+.hero{background:var(--mint);padding:44px 0 40px;text-align:center}
+.hero .bird{width:76px;margin:0 auto 16px;display:block}
+.hero h1{font-size:32px;font-weight:600;color:var(--blue);margin:0 0 12px;line-height:1.2;letter-spacing:-.02em}
+.hero p{margin:0 auto;max-width:56ch;color:#3C5245;font-size:16.5px}
+.hero .slog{margin-top:20px;font-family:Onest;font-weight:600;color:var(--green);font-size:15px}
+@media(max-width:520px){.hero h1{font-size:26px}.hero{padding:32px 0 30px}}
+
+/* blocks */
+.sec{padding:40px 0}
+.sec.alt{background:#FBFDFC;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.sec h2{font-size:22px;font-weight:600;color:var(--blue);margin:0 0 8px;letter-spacing:-.01em}
+.sec .lead{color:var(--ink-soft);margin:0 0 22px;font-size:15.5px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 19px}
+.tile h3{font-size:16px;margin:0 0 6px;color:var(--blue);font-weight:600}
+.tile p{margin:0;font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:12px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step .b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--mint);color:var(--green);font-family:Onest;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.step p{margin:0;font-size:15px}
+.step p b{display:block;color:var(--blue);font-weight:600}
+.note-amber{margin-top:22px;background:#FDF7EC;border:1px solid rgba(232,169,74,.45);border-radius:12px;padding:16px 18px;font-size:14.5px;color:#5A4718;line-height:1.6}
+.note-amber b{color:#8A6A22}
+
+/* wizard */
+.wiz{padding:38px 0 60px}
+.bar{height:5px;background:var(--line-soft);border-radius:99px;overflow:hidden;margin-bottom:9px}
+.bar i{display:block;height:100%;background:var(--green);border-radius:99px;width:0;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.barlab{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-soft);margin-bottom:24px}
+.stp{display:none}
+.stp.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stp > h2{font-size:23px;font-weight:600;color:var(--blue);margin:0 0 6px;letter-spacing:-.01em}
+.stp > .sub{color:var(--ink-soft);font-size:15px;margin:0 0 26px}
+
+.q{margin-bottom:28px}
+.q > label,.q > .qt{display:block;font-family:Onest;font-weight:600;font-size:17px;color:var(--ink);margin-bottom:5px;line-height:1.35}
+.q .exp{display:block;font-size:14px;color:var(--ink-soft);margin-bottom:12px;line-height:1.5}
+.ch{display:flex;flex-direction:column;gap:8px}
+.ch label{display:flex;gap:12px;align-items:flex-start;padding:14px 15px;border:1.5px solid var(--line);border-radius:11px;cursor:pointer;transition:.13s background,.13s border-color}
+.ch label:hover{border-color:#BBCEC4;background:#FBFDFC}
+.ch label.on{background:var(--mint);border-color:var(--green)}
+.ch input{margin:3px 0 0;width:19px;height:19px;flex:none;accent-color:var(--green);cursor:pointer}
+.ch span{font-size:15.5px;line-height:1.45}
+.ch span small{display:block;font-size:13.5px;color:var(--ink-soft);margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chips label{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;font-size:15px;transition:.13s}
+.chips label:hover{border-color:#BBCEC4}
+.chips label.on{background:var(--mint);border-color:var(--green);color:#255C43}
+.chips input{width:17px;height:17px;accent-color:var(--green);margin:0}
+
+.fld{display:flex;border:1.5px solid var(--line);border-radius:11px;background:#fff;transition:.15s}
+.fld:focus-within{border-color:var(--green);box-shadow:0 0 0 3px rgba(46,125,88,.13)}
+.fld input{flex:1;min-width:0;border:0;background:transparent;padding:14px 15px;font:inherit;font-size:17px;font-weight:500;color:var(--blue);outline:none}
+.fld input::placeholder{color:#B7BEBA;font-weight:400}
+.fld .u{display:flex;align-items:center;padding:0 15px;border-left:1px solid var(--line-soft);font-size:14px;color:var(--ink-soft);background:#FBFDFC;border-radius:0 9px 9px 0}
+.fld.txt input{text-align:left}
+.fld input[inputmode=numeric]{text-align:right}
+
+.nav{display:flex;gap:11px;align-items:center;margin-top:30px;flex-wrap:wrap}
+button.btn{font-family:Onest;font-weight:600;font-size:16px;padding:15px 30px;border-radius:11px;border:1.5px solid var(--line);background:#fff;color:var(--blue);cursor:pointer;transition:.13s}
+button.btn:hover{background:#FBFDFC;border-color:#BBCEC4}
+button.btn.pri{background:var(--green);border-color:var(--green);color:#fff}
+button.btn.pri:hover{background:#256647;border-color:#256647}
+button.btn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+button.btn:active{transform:translateY(1px)}
+.warn{font-size:14px;color:#8A6A22;font-weight:500;margin-top:12px}
+
+.agree{display:flex;gap:11px;align-items:flex-start;margin-top:6px;font-size:13.8px;color:var(--ink-soft);line-height:1.5}
+.agree input{margin:3px 0 0;width:19px;height:19px;flex:none;accent-color:var(--green)}
+
+/* thanks */
+.thx{display:none;text-align:center;padding:20px 0 10px}
+.thx.on{display:block;animation:fade .3s ease}
+.thx .ic{width:74px;height:74px;border-radius:50%;background:var(--mint);margin:0 auto 20px;display:flex;align-items:center;justify-content:center}
+.thx .ic svg{width:40px}
+.thx h2{font-size:27px;color:var(--blue);margin:0 0 12px;font-weight:600}
+.thx p{color:var(--ink-soft);max-width:48ch;margin:0 auto 10px;font-size:16px}
+.thx .card{margin-top:26px;background:var(--mint);border-radius:14px;padding:22px;text-align:left}
+.thx .card b{font-family:Onest;color:var(--blue);display:block;margin-bottom:7px;font-size:16px}
+.thx .card p{color:#39503F;margin:0;max-width:none;font-size:15px}
+.calc{margin-top:26px;border:1.5px solid var(--green);border-radius:14px;overflow:hidden;text-align:left}
+.calc-h{background:var(--green);color:#fff;font-family:Onest;font-weight:600;font-size:15.5px;padding:13px 18px}
+.calc-t{width:100%;border-collapse:collapse;background:#fff}
+.calc-t tr{border-top:1px solid var(--line-soft)}
+.calc-t tr:first-child{border-top:0}
+.calc-t th{text-align:left;font-weight:400;color:var(--ink-soft);padding:12px 18px;font-size:14.5px;line-height:1.4}
+.calc-t td{text-align:right;padding:12px 18px;font-weight:600;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums;font-size:15.5px}
+.calc-t tr.big th{color:var(--ink);font-weight:500;font-size:15px}
+.calc-t tr.big td{font-family:Onest;font-size:22px;color:var(--green);font-weight:700}
+.calc-t tr.hl{background:#F7FBF9}
+.calc-t tr.hl td{color:var(--green)}
+.calc-n{margin:0;padding:14px 18px;background:#FBFDFC;border-top:1px solid var(--line-soft);font-size:12.8px;color:var(--ink-soft);line-height:1.55}
+@media(max-width:430px){.calc-t th,.calc-t td{padding:11px 13px;font-size:14px}.calc-t tr.big td{font-size:19px}}
+.send{margin-top:22px;display:flex;flex-direction:column;gap:10px;align-items:center}
+.send small{color:var(--ink-soft);font-size:13.5px;max-width:44ch}
+
+footer{background:var(--blue);color:#B9C7D8;padding:34px 0 40px;font-size:13.5px;line-height:1.7}
+footer b{color:#fff;font-family:Onest}
+footer a{color:#C9DCF0}
+.own{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);font-size:12.5px;color:#95A8BF}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="in">
+    <div class="brand">
+      <svg viewBox="0 0 240 64" role="img" aria-label="Qabilet">
+        <path d="M6 28 Q58 2 120 46 Q58 26 6 28 Z" fill="#4E9E74"/>
+        <path d="M234 28 Q182 2 120 46 Q182 26 234 28 Z" fill="#A8C0E0"/>
+      </svg>
+      <div><div class="nm">Qabilet</div><div class="sb" data-i="tag"></div></div>
+    </div>
+    <div class="lang">
+      <button type="button" id="lRu" class="on">RU</button>
+      <button type="button" id="lKz">ҚАЗ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<div class="hero" id="hero">
+  <div class="in">
+    <svg class="bird" viewBox="0 0 240 64" aria-hidden="true">
+      <path d="M6 28 Q58 2 120 46 Q58 26 6 28 Z" fill="#2E7D58"/>
+      <path d="M234 28 Q182 2 120 46 Q182 26 234 28 Z" fill="#1E3A5F"/>
+    </svg>
+    <h1 data-i="heroH"></h1>
+    <p data-i="heroP"></p>
+    <div class="slog" data-i="slogan"></div>
+  </div>
+</div>
+
+<!-- ===== О ПРОЦЕДУРЕ ===== -->
+<section class="sec" id="about1">
+  <div class="in">
+    <h2 data-i="aboutH"></h2>
+    <p class="lead" data-i="aboutL"></p>
+    <div class="grid">
+      <div class="tile"><h3 data-i="t1h"></h3><p data-i="t1p"></p></div>
+      <div class="tile"><h3 data-i="t2h"></h3><p data-i="t2p"></p></div>
+      <div class="tile"><h3 data-i="t3h"></h3><p data-i="t3p"></p></div>
+      <div class="tile"><h3 data-i="t4h"></h3><p data-i="t4p"></p></div>
+    </div>
+    <div class="note-amber"><b data-i="honestH"></b> <span data-i="honestP"></span></div>
+  </div>
+</section>
+
+<!-- ===== КАК ПРОХОДИТ ===== -->
+<section class="sec alt" id="about2">
+  <div class="in">
+    <h2 data-i="howH"></h2>
+    <p class="lead" data-i="howL"></p>
+    <div class="steps">
+      <div class="step"><div class="b">1</div><p><b data-i="s1h"></b><span data-i="s1p"></span></p></div>
+      <div class="step"><div class="b">2</div><p><b data-i="s2h"></b><span data-i="s2p"></span></p></div>
+      <div class="step"><div class="b">3</div><p><b data-i="s3h"></b><span data-i="s3p"></span></p></div>
+      <div class="step"><div class="b">4</div><p><b data-i="s4h"></b><span data-i="s4p"></span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== О КОМПАНИИ ===== -->
+<section class="sec" id="about3">
+  <div class="in">
+    <h2 data-i="coH"></h2>
+    <p class="lead" id="coLead"></p>
+    <div class="grid">
+      <div class="tile"><h3 data-i="c1h"></h3><p data-i="c1p"></p></div>
+      <div class="tile"><h3 data-i="c2h"></h3><p data-i="c2p"></p></div>
+      <div class="tile"><h3 data-i="c3h"></h3><p id="c3p"></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== АНКЕТА ===== -->
+<section class="wiz alt" style="background:#FBFDFC;border-top:1px solid var(--line-soft)">
+  <div class="in">
+
+    <div id="wizBox">
+      <h2 style="font-size:24px;color:var(--blue);margin:0 0 6px" data-i="formH"></h2>
+      <p style="color:var(--ink-soft);margin:0 0 22px;font-size:15.5px" data-i="formL"></p>
+
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="barlab"><span id="barStep"></span><span id="barMin" data-i="barMin"></span></div>
+
+      <!-- ШАГ 1 -->
+      <div class="stp on" data-s="1">
+        <h2 data-i="p1h"></h2>
+        <p class="sub" data-i="p1s"></p>
+
+        <div class="q"><span class="qt" data-i="q1"></span><span class="exp" data-i="q1e"></span>
+          <div class="ch" data-g="ip">
+            <label><input type="radio" name="ip" value="no"><span data-i="q1a"></span></label>
+            <label><input type="radio" name="ip" value="yes"><span data-i="q1b"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q2"></span>
+          <div class="ch" data-g="pay">
+            <label><input type="radio" name="pay" value="ok"><span data-i="q2a"></span></label>
+            <label><input type="radio" name="pay" value="late"><span data-i="q2b"></span></label>
+            <label><input type="radio" name="pay" value="stop"><span data-i="q2c"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q3"></span>
+          <div class="ch" data-g="over">
+            <label><input type="radio" name="over" value="no"><span data-i="q3a"></span></label>
+            <label><input type="radio" name="over" value="s6"><span data-i="q3b"></span></label>
+            <label><input type="radio" name="over" value="s12"><span data-i="q3c"></span></label>
+            <label><input type="radio" name="over" value="l12"><span data-i="q3d"></span></label>
+          </div></div>
+
+        <div class="q"><label for="debt" data-i="q4"></label><span class="exp" data-i="q4e"></span>
+          <div class="fld"><input id="debt" type="text" inputmode="numeric" placeholder="3 500 000"><span class="u">₸</span></div></div>
+
+        <div class="q"><label for="curpay" data-i="q4b"></label><span class="exp" data-i="q4be"></span>
+          <div class="fld"><input id="curpay" type="text" inputmode="numeric" placeholder="180 000"><span class="u">₸</span></div></div>
+
+        <div class="q"><span class="qt" data-i="q5"></span>
+          <div class="ch" data-g="cnt">
+            <label><input type="radio" name="cnt" value="a"><span data-i="q5a"></span></label>
+            <label><input type="radio" name="cnt" value="b"><span data-i="q5b"></span></label>
+            <label><input type="radio" name="cnt" value="c"><span data-i="q5c"></span></label>
+          </div></div>
+
+        <div class="nav"><button class="btn pri" type="button" data-next data-i="btnNext"></button></div>
+        <div class="warn" data-w></div>
+      </div>
+
+      <!-- ШАГ 2 -->
+      <div class="stp" data-s="2">
+        <h2 data-i="p2h"></h2>
+        <p class="sub" data-i="p2s"></p>
+
+        <div class="q"><label for="income" data-i="q6"></label><span class="exp" data-i="q6e"></span>
+          <div class="fld"><input id="income" type="text" inputmode="numeric" placeholder="250 000"><span class="u">₸</span></div></div>
+
+        <div class="q"><span class="qt" data-i="q7"></span><span class="exp" data-i="q7e"></span>
+          <div class="ch" data-g="proof">
+            <label><input type="radio" name="proof" value="spr"><span data-i="q7a"></span></label>
+            <label><input type="radio" name="proof" value="part"><span data-i="q7b"></span></label>
+            <label><input type="radio" name="proof" value="no"><span data-i="q7c"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q22"></span><span class="exp" data-i="q22e"></span>
+          <div class="ch" data-g="empl">
+            <label><input type="radio" name="empl" value="off"><span data-i="q22a"></span></label>
+            <label><input type="radio" name="empl" value="unoff"><span data-i="q22b"></span></label>
+            <label><input type="radio" name="empl" value="self"><span data-i="q22c"></span></label>
+            <label><input type="radio" name="empl" value="pens"><span data-i="q22d"></span></label>
+            <label><input type="radio" name="empl" value="none"><span data-i="q22e2"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q23"></span><span class="exp" data-i="q23e"></span>
+          <div class="ch" data-g="sp">
+            <label><input type="radio" name="sp" value="yes"><span data-i="q23a"></span></label>
+            <label><input type="radio" name="sp" value="no"><span data-i="q23b"></span></label>
+            <label><input type="radio" name="sp" value="nosp"><span data-i="q23c"></span></label>
+          </div></div>
+
+        <div class="q" id="spBox" style="display:none"><label for="spinc" data-i="q23i"></label><span class="exp" data-i="q23ie"></span>
+          <div class="fld"><input id="spinc" type="text" inputmode="numeric" placeholder="150 000"><span class="u">₸</span></div></div>
+
+        <div class="q"><label for="deps" data-i="q8"></label><span class="exp" data-i="q8e"></span>
+          <div class="fld"><input id="deps" type="text" inputmode="numeric" placeholder="1"><span class="u" data-i="unitP"></span></div></div>
+
+        <div class="q"><span class="qt" data-i="q9"></span><span class="exp" data-i="q9e"></span>
+          <div class="ch" data-g="susn">
+            <label><input type="radio" name="susn" value="yes"><span data-i="q9a"></span></label>
+            <label><input type="radio" name="susn" value="no"><span data-i="q9b"></span></label>
+          </div></div>
+
+        <div class="nav"><button class="btn" type="button" data-prev data-i="btnBack"></button><button class="btn pri" type="button" data-next data-i="btnNext"></button></div>
+        <div class="warn" data-w></div>
+      </div>
+
+      <!-- ШАГ 3 -->
+      <div class="stp" data-s="3">
+        <h2 data-i="p3h"></h2>
+        <p class="sub" data-i="p3s"></p>
+
+        <div class="q"><span class="qt" data-i="q10"></span>
+          <div class="ch" data-g="home">
+            <label><input type="radio" name="home" value="no"><span data-i="q10a"></span></label>
+            <label><input type="radio" name="home" value="rent"><span data-i="q10r"></span></label>
+            <label><input type="radio" name="home" value="one"><span data-i="q10b"></span></label>
+            <label><input type="radio" name="home" value="many"><span data-i="q10c"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q10m"></span><span class="exp" data-i="q10me"></span>
+          <div class="ch" data-g="mort">
+            <label><input type="radio" name="mort" value="no"><span data-i="q10ma"></span></label>
+            <label><input type="radio" name="mort" value="yes"><span data-i="q10mb"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q11"></span><span class="exp" data-i="q11e"></span>
+          <div class="ch" data-g="prop">
+            <label><input type="radio" name="prop" value="no"><span data-i="q11a"></span></label>
+            <label><input type="radio" name="prop" value="one"><span data-i="q11b"></span></label>
+            <label><input type="radio" name="prop" value="many"><span data-i="q11c"></span></label>
+          </div></div>
+
+        <div class="q" id="carBox" style="display:none"><span class="qt" data-i="q11l"></span><span class="exp" data-i="q11le"></span>
+          <div class="ch" data-g="carloan">
+            <label><input type="radio" name="carloan" value="no"><span data-i="q11la"></span></label>
+            <label><input type="radio" name="carloan" value="yes"><span data-i="q11lb"></span></label>
+          </div></div>
+
+        <div class="q" id="carSellBox" style="display:none"><span class="qt" data-i="q11s"></span><span class="exp" data-i="q11se"></span>
+          <div class="ch" data-g="carsell">
+            <label><input type="radio" name="carsell" value="yes"><span data-i="q11sa"></span></label>
+            <label><input type="radio" name="carsell" value="maybe"><span data-i="q11sb"></span></label>
+            <label><input type="radio" name="carsell" value="no"><span data-i="q11sc"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q13"></span><span class="exp" data-i="q13e"></span>
+          <div class="ch" data-g="sold">
+            <label><input type="radio" name="sold" value="no"><span data-i="q13a"></span></label>
+            <label><input type="radio" name="sold" value="yes"><span data-i="q13b"></span></label>
+          </div></div>
+
+        <div class="q" id="soldWhy" style="display:none"><span class="qt" data-i="q13w"></span><span class="exp" data-i="q13we"></span>
+          <div class="ch" data-g="soldw">
+            <label><input type="radio" name="soldw" value="loan"><span data-i="q13w1"></span></label>
+            <label><input type="radio" name="soldw" value="other"><span data-i="q13w2"></span></label>
+          </div></div>
+
+        <div class="nav"><button class="btn" type="button" data-prev data-i="btnBack"></button><button class="btn pri" type="button" data-next data-i="btnNext"></button></div>
+        <div class="warn" data-w></div>
+      </div>
+
+      <!-- ШАГ 4 -->
+      <div class="stp" data-s="4">
+        <h2 data-i="p4h"></h2>
+        <p class="sub" data-i="p4s"></p>
+
+        <div class="q"><span class="qt" data-i="q14"></span><span class="exp" data-i="q14e"></span>
+          <div class="chips" id="goals">
+            <label><input type="checkbox" value="med"><span data-i="g1"></span></label>
+            <label><input type="checkbox" value="edu"><span data-i="g2"></span></label>
+            <label><input type="checkbox" value="home"><span data-i="g3"></span></label>
+            <label><input type="checkbox" value="fam"><span data-i="g4"></span></label>
+            <label><input type="checkbox" value="biz"><span data-i="g5"></span></label>
+            <label><input type="checkbox" value="refi"><span data-i="g6"></span></label>
+            <label><input type="checkbox" value="buy"><span data-i="g7"></span></label>
+            <label><input type="checkbox" value="lux"><span data-i="g8"></span></label>
+            <label><input type="checkbox" value="idk"><span data-i="g9"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q15"></span><span class="exp" data-i="q15e"></span>
+          <div class="ch" data-g="docs">
+            <label><input type="radio" name="docs" value="yes"><span data-i="q15a"></span></label>
+            <label><input type="radio" name="docs" value="part"><span data-i="q15b"></span></label>
+            <label><input type="radio" name="docs" value="no"><span data-i="q15c"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q16"></span><span class="exp" data-i="q16e"></span>
+          <div class="ch" data-g="bet">
+            <label><input type="radio" name="bet" value="no"><span data-i="q16a"></span></label>
+            <label><input type="radio" name="bet" value="yes"><span data-i="q16b"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q17"></span><span class="exp" data-i="q17e"></span>
+          <div class="ch" data-g="turn">
+            <label><input type="radio" name="turn" value="no"><span data-i="q17a"></span></label>
+            <label><input type="radio" name="turn" value="yes"><span data-i="q17b"></span></label>
+          </div></div>
+
+        <div class="q"><span class="qt" data-i="q24"></span><span class="exp" data-i="q24e"></span>
+          <div class="ch" data-g="trip">
+            <label><input type="radio" name="trip" value="no"><span data-i="q24a"></span></label>
+            <label><input type="radio" name="trip" value="yes"><span data-i="q24b"></span></label>
+          </div></div>
+
+        <div class="q" id="tripWhy" style="display:none"><span class="qt" data-i="q24w"></span><span class="exp" data-i="q24we"></span>
+          <div class="ch" data-g="tripw">
+            <label><input type="radio" name="tripw" value="med"><span data-i="q24w1"></span></label>
+            <label><input type="radio" name="tripw" value="work"><span data-i="q24w2"></span></label>
+            <label><input type="radio" name="tripw" value="edu"><span data-i="q24w3"></span></label>
+            <label><input type="radio" name="tripw" value="fam"><span data-i="q24w4"></span></label>
+            <label><input type="radio" name="tripw" value="rest"><span data-i="q24w5"></span></label>
+            <label><input type="radio" name="tripw" value="other"><span data-i="q24w6"></span></label>
+          </div></div>
+
+        <div class="nav"><button class="btn" type="button" data-prev data-i="btnBack"></button><button class="btn pri" type="button" data-next data-i="btnNext"></button></div>
+        <div class="warn" data-w></div>
+      </div>
+
+      <!-- ШАГ 5 -->
+      <div class="stp" data-s="5">
+        <h2 data-i="p5h"></h2>
+        <p class="sub" data-i="p5s"></p>
+
+        <div class="q"><label for="fio" data-i="q18"></label>
+          <div class="fld txt"><input id="fio" type="text" autocomplete="name" data-ip="ph18"></div></div>
+
+        <div class="q"><label for="tel" data-i="q19"></label><span class="exp" data-i="q19e"></span>
+          <div class="fld txt"><input id="tel" type="tel" inputmode="tel" autocomplete="tel" data-ip="ph19"></div></div>
+
+        <div class="q"><label for="city" data-i="q20"></label>
+          <div class="fld txt"><input id="city" type="text" data-ip="ph20"></div></div>
+
+        <div class="q"><span class="qt" data-i="q21"></span>
+          <div class="ch" data-g="when">
+            <label><input type="radio" name="when" value="any"><span data-i="q21a"></span></label>
+            <label><input type="radio" name="when" value="am"><span data-i="q21b"></span></label>
+            <label><input type="radio" name="when" value="pm"><span data-i="q21c"></span></label>
+          </div></div>
+
+        <label class="agree"><input type="checkbox" id="agree"><span data-i="agree"></span></label>
+        <label class="agree"><input type="checkbox" id="agree2"><span data-i="agree2"></span></label>
+
+        <div class="nav"><button class="btn" type="button" data-prev data-i="btnBack"></button><button class="btn pri" type="button" id="submit" data-i="btnSend"></button></div>
+        <div class="warn" data-w></div>
+      </div>
+    </div>
+
+    <!-- СПАСИБО -->
+    <div class="thx" id="thx">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2E7D58" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <h2 id="thxH"></h2>
+      <p data-i="thxP1"></p>
+      <p data-i="thxP2"></p>
+      <div class="send">
+        <button class="btn pri" type="button" id="wa" data-i="btnWa"></button>
+        <small data-i="waHint"></small>
+      </div>
+      <div class="calc" id="calcCard" style="display:none">
+        <div class="calc-h" data-i="calcH"></div>
+        <table class="calc-t">
+          <tr class="big"><th data-i="cNew"></th><td id="cNewV"></td></tr>
+          <tr><th data-i="cCur"></th><td id="cCurV"></td></tr>
+          <tr class="hl" id="rDiff"><th data-i="cDiff"></th><td id="cDiffV"></td></tr>
+          <tr><th data-i="cTotal"></th><td id="cTotalV"></td></tr>
+          <tr><th data-i="cRest"></th><td id="cRestV"></td></tr>
+          <tr class="hl" id="rSave"><th data-i="cSave"></th><td id="cSaveV"></td></tr>
+        </table>
+        <p class="calc-n" data-i="calcN"></p>
+      </div>
+
+      <div class="card" id="rulesCard" style="display:none">
+        <b data-i="thxRh"></b>
+        <p data-i="thxRl"></p>
+        <ul class="rules">
+          <li data-i="thxR1"></li>
+          <li data-i="thxR2"></li>
+          <li data-i="thxR3"></li>
+          <li data-i="thxR4"></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <b data-i="thxCh"></b>
+        <p data-i="thxCp"></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="in">
+    <b id="fCo"></b><br>
+    <span id="fContacts"></span><br><br>
+    <span data-i="disc"></span>
+    <div class="own" data-i="own"></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   НАСТРОЙКИ — здесь меняете всё, что касается компании
+   ============================================================ */
+var CONFIG={
+  company:'Qabilet',                          // торговая марка
+  legalName:'ТОО «Кабилет Финанс»',           // юридическое наименование
+  bin:'',                                     // БИН. Пусто — на сайте не показывается нигде.
+                                              // Впишите номер, если решите показывать в подвале
+  phoneShow:'',                               // телефон — впишите, например '+7 (700) 123-45-67'
+  whatsapp:'',                                // WhatsApp: только цифры, без + и пробелов, например '77001234567'
+                                              // пусто — кнопка WhatsApp просто не показывается
+  email:'',                                   // почта — например 'info@vashdomen.kz'
+  site:'',                                    // домен — впишите свой, например 'example.kz'
+  address:'',                                 // адрес офиса. Квартиру публиковать не советую — см. пояснение
+  years:'',                                   // стаж. Компания зарегистрирована 29.07.2026 — пока оставить пустым
+  webhook:'https://script.google.com/macros/s/AKfycbyUWHXNdYwcCVu7g2l3v07c2opB3yRLcbZYDDhTlncU5eHLmqbNQRVU0HJus95szAhg/exec'
+};
+/* ===== показатели 2026 (для служебного расчёта, клиент их не видит) ===== */
+var PM=50851, TERM=60;
+
+var $=function(id){return document.getElementById(id)};
+var lang='ru', step=1, TOTAL=5;
+
+/* ============================================================
+   ТЕКСТЫ
+   ============================================================ */
+var T={
+ru:{
+tag:'Восстановление платёжеспособности · Списание долгов',
+heroH:'Узнайте, подходит ли вам процедура',
+heroP:'Ответьте на несколько простых вопросов о своей ситуации. Это займёт около пяти минут. Юрист изучит ваши ответы и скажет, что можно сделать именно в вашем случае.',
+slogan:'Сбросьте долги — расправьте крылья',
+
+aboutH:'Что такое восстановление платёжеспособности',
+aboutL:'Это законная процедура для граждан Казахстана, которые больше не справляются с кредитами. Она проходит через суд и работает с 2023 года.',
+t1h:'Взыскание приостанавливается',
+t1p:'С момента, когда суд принимает дело, звонки коллекторов и списания со счетов прекращаются.',
+t2h:'Проценты перестают расти',
+t2p:'После того как суд утвердит план, банк больше не начисляет вознаграждение по займам.',
+t3h:'Вам оставляют прожиточный минимум',
+t3p:'Каждый месяц у вас остаётся прожиточный минимум на себя и на нетрудоспособных членов семьи. Это гарантия закона.',
+t4h:'Понятный график вместо хаоса',
+t4p:'Вместо десятка требований — один план платежей на срок до пяти лет, утверждённый судом.',
+honestH:'Скажем честно:',
+honestP:'восстановление платёжеспособности не списывает долг целиком — оно даёт посильный график и защиту от взыскания. Долги списываются в другой процедуре, в банкротстве, но там имущество продаётся с торгов. Какая из них подходит именно вам, скажет юрист после разбора анкеты.',
+
+howH:'Как всё проходит',
+howL:'Четыре шага от анкеты до решения суда.',
+s1h:'Вы заполняете анкету','s1p':'Прямо здесь, за пять минут. Никаких документов на этом этапе не нужно.',
+s2h:'Юрист разбирает вашу ситуацию','s2p':'Смотрит доход, долги, имущество и историю займов. Затем менеджер связывается с вами и объясняет, что реально можно сделать.',
+s3h:'Собираем документы и подаём в суд','s3p':'Мы готовим заявление и приложения, вы только предоставляете справки. Суд назначает финансового управляющего.',
+s4h:'Суд утверждает план','s4p':'Вы платите по графику, который вам по силам, и живёте дальше.',
+
+coH:'О компании',
+c1h:'Мы занимаемся только долгами граждан',
+c1p:'Восстановление платёжеспособности, судебное и внесудебное банкротство. Это узкая специализация, а не одна из услуг в общем списке.',
+c2h:'Решение принимает суд, а не мы',
+c2p:'Мы готовим дело так, чтобы у него были лучшие шансы, и заранее показываем сильные и слабые стороны вашей ситуации. Но гарантировать исход не может никто: суд может и отказать. Если вам где-то обещают стопроцентный результат — вас вводят в заблуждение.',
+c3h:'Работаем официально',
+c3p:'$1. Всё по письменному договору: услуги, сроки и стоимость фиксируются до начала работы. Никаких устных обещаний и оплаты «на карту».',
+
+formH:'Анкета',
+formL:'Отвечайте спокойно и честно — от этого зависит точность разбора. Здесь нет неправильных ответов.',
+barMin:'около 5 минут',
+barStep:'Шаг $1 из $2',
+
+p1h:'Ваша ситуация с кредитами',p1s:'Начнём с самого простого.',
+q1:'Вы сейчас зарегистрированы как индивидуальный предприниматель?',
+q1e:'Если ИП открыт, но деятельность не ведётся, он всё равно считается действующим.',
+q1a:'Нет, я обычное физическое лицо',q1b:'Да, ИП открыт',
+q2:'Получается ли платить по кредитам?',
+q2a:'Плачу вовремя, справляюсь',q2b:'Плачу, но с задержками',q2c:'Уже не плачу',
+q3:'Как давно начались просрочки?',
+q3a:'Просрочек нет',q3b:'Меньше полугода',q3c:'От полугода до года',q3d:'Больше года',
+q4:'Сколько всего вы должны?',
+q4e:'Все кредиты, микрозаймы и долги вместе. Примерная сумма — этого достаточно.',
+q4b:'Сколько вы должны платить по всем кредитам в месяц?',
+q4be:'По графикам банков — даже если сейчас не платите. Примерная сумма подойдёт.',
+q5:'Сколько у вас кредитов и займов?',
+q5a:'Один или два',q5b:'От трёх до пяти',q5c:'Больше пяти',
+
+p2h:'Доход и семья',p2s:'Это нужно, чтобы понять, какой платёж будет вам по силам.',
+q6:'Сколько вы получаете на руки в месяц?',
+q6e:'То, что реально приходит после всех вычетов. Если доход меняется — укажите средний.',
+q7:'Чем можете подтвердить доход?',
+q7e:'Достаточно одного документа.',
+q7a:'Справкой о заработной плате с места работы',
+q7b:'Частично — часть дохода неофициальная',
+q7c:'Пока ничем подтвердить не могу',
+q22:'Кем вы работаете сейчас?',
+q22e:'Выберите то, что ближе всего к вашей ситуации.',
+q22a:'Работаю официально, по трудовому договору',
+q22b:'Работаю неофициально, без договора',
+q22c:'Самозанятый или работаю на себя',
+q22d:'Я на пенсии',
+q22e2:'Сейчас не работаю',
+q23:'Работает ли ваш супруг или супруга?',
+q23e:'Суд смотрит на бюджет семьи целиком, поэтому спрашиваем и о втором доходе.',
+q23a:'Да, работает',q23b:'Нет, не работает',q23c:'Я не состою в браке',
+q23i:'Сколько супруг или супруга получает на руки в месяц?',
+q23ie:'Примерная сумма подойдёт. Если доход меняется — укажите средний.',
+q8:'Сколько человек живёт на ваш доход, включая вас самих?',
+q8e:'Посчитайте себя и тех, кто живёт за ваш счёт: детей до 18 лет, пенсионеров, людей с инвалидностью. Работающего супруга здесь считать не нужно — о нём был отдельный вопрос.',
+unitP:'чел.',
+q9:'Получаете ли вы адресную социальную помощь?',
+q9e:'АСП, пособия или статус социально уязвимого слоя населения.',
+q9a:'Да, получаю',q9b:'Нет',
+
+p3h:'Имущество',p3s:'От этого сильно зависит, какая процедура вам подойдёт.',
+q10:'Есть ли у вас жильё?',
+q10a:'Своего жилья нет, живу у родных',
+q10r:'Арендую жильё',
+q10b:'Одно, я в нём живу',q10c:'Больше одного',
+q10m:'Есть ли у вас ипотека?',
+q10me:'Любой кредит, где жильё оформлено в залог банка.',
+q10ma:'Нет',q10mb:'Да, есть',
+q11:'Есть ли у вас машина?',
+q11e:'Автомобиль, оформленный на вас.',
+q11a:'Машины нет',q11b:'Одна',q11c:'Две и больше',
+q11l:'Машина в кредите или в залоге?',
+q11le:'Автокредит, лизинг, заём под залог автомобиля.',
+q11la:'Нет, машина чистая',q11lb:'Да, в кредите или залоге',
+q11s:'Готовы продать машину, если это потребуется?',
+q11se:'Иногда продажа одного объекта решает дело в вашу пользу. Ответьте честно — от этого зависит стратегия.',
+q11sa:'Да, готов',q11sb:'Только если другого выхода не будет',q11sc:'Нет, не готов',
+q13:'Продавали или дарили что-то из имущества за последние три года?',
+q13e:'Квартиру, машину, землю, долю. Спрашиваем, потому что такие сделки проверяются в процедуре.',
+q13a:'Нет',q13b:'Да, было',
+q13w:'На что пошли деньги от продажи?',
+q13we:'Это важнее самого факта продажи. Если деньги ушли на погашение кредитов — вопросов почти не возникает.',
+q13w1:'На погашение кредитов и долгов',q13w2:'На другие цели',
+
+p4h:'Откуда взялись долги',p4s:'Спрашиваем без осуждения. В такой ситуации оказываются тысячи людей, и почти всегда этому есть объяснение.',
+q14:'На что уходили заёмные деньги?',
+q14e:'Отметьте всё, что подходит.',
+g1:'Лечение',g2:'Обучение',g3:'Жильё и ремонт',g4:'Помощь родным',g5:'Своё дело',g6:'Гашение других кредитов',g7:'Крупные покупки',g8:'Поездки, торжества',g9:'Уже не помню',
+q15:'Сохранились ли документы или чеки?',
+q15e:'Договоры, выписки, чеки из клиники или магазина.',
+q15a:'Да, почти всё сохранилось',q15b:'Частично',q15c:'Ничего не осталось',
+q16:'Были ли за последний год переводы на ставки или онлайн-игры?',
+q16e:'Отвечайте честно: это видно в банковской выписке, и нам важно знать заранее, а не в суде.',
+q16a:'Нет, не было',q16b:'Да, были',
+q17:'Проходили ли через ваши карты суммы, заметно большие вашей зарплаты?',
+q17e:'Например, вы получали и переводили деньги за кого-то.',
+q17a:'Нет',q17b:'Да, бывало',
+q24:'Выезжали ли вы за границу за последние три года?',
+q24e:'Спрашиваем, потому что выезды видны по отметкам и могут обсуждаться в суде.',
+q24a:'Нет, не выезжал',q24b:'Да, выезжал',
+q24w:'С какой целью был выезд?',
+q24we:'Если поездок было несколько — отметьте основную причину.',
+q24w1:'Лечение',q24w2:'Работа или командировка',q24w3:'Учёба',
+q24w4:'Поездка к родным',q24w5:'Отдых, туризм',q24w6:'Другая причина',
+
+p5h:'Как с вами связаться',p5s:'Остался последний шаг. Менеджер позвонит и расскажет, что показал разбор.',
+q18:'Ваши фамилия и имя',ph18:'Мұратов Айдос',
+q19:'Номер телефона',q19e:'На этот номер позвонит менеджер.',ph19:'+7 (___) ___-__-__',
+q20:'Ваш город',ph20:'Алматы',
+q21:'Когда удобно принять звонок?',
+q21a:'В любое время',q21b:'В первой половине дня',q21c:'После обеда',
+agree:'Я согласен на обработку моих персональных данных для консультации. Данные используются только для связи со мной и не передаются третьим лицам.',
+agree2:'Я подтверждаю, что ответил на вопросы достоверно и готов подтвердить сказанное документами. Мне понятно, что разбор строится на моих ответах и ответственность за их достоверность лежит на мне.',
+wAgree2:'Подтвердите достоверность ответов',
+
+btnNext:'Дальше',btnBack:'Назад',btnSend:'Отправить анкету',
+wNeed:'Ответьте, пожалуйста, на все вопросы этого шага',
+wDebt:'Укажите примерную сумму долга',
+wCur:'Укажите примерный платёж по кредитам',
+wInc:'Укажите ваш доход',
+wSpInc:'Укажите доход супруга или супруги',
+wDeps:'Укажите, сколько человек живёт на ваш доход, включая вас',
+wSpInc:'Укажите доход супруга или супруги',
+wDeps:'Укажите, сколько человек живёт на ваш доход, включая вас',
+calcH:'Предварительный расчёт по вашим ответам',
+cNew:'Новый платёж — не более',
+cCur:'Сейчас по графикам банков',
+cDiff:'Освободится каждый месяц',
+cTotal:'Заплатите за весь срок плана',
+cRest:'Останется долг после плана',
+cSave:'Не переплатите процентов и пеней — около',
+calcN:'Это предварительная оценка по вашим ответам, а не окончательный расчёт. Точные суммы и срок определяет суд при утверждении плана — они могут отличаться. Остаток долга после процедуры сохраняется: восстановление платёжеспособности не списывает задолженность.',
+wFio:'Напишите фамилию и имя',
+wTel:'Напишите номер телефона',
+wAgree:'Отметьте согласие на обработку данных',
+
+thxH:'Спасибо, $1!',
+thxP1:'Ваша анкета заполнена. Юрист изучит её и передаст результат менеджеру.',
+thxP2:'Менеджер свяжется с вами по указанному номеру и расскажет, что можно сделать в вашей ситуации.',
+btnWa:'Отправить анкету менеджеру',
+waHint:'Откроется WhatsApp с готовым сообщением — вам останется только нажать «Отправить».',
+thxRh:'Что важно сделать уже сейчас',
+thxRl:'Эти правила действуют с сегодняшнего дня и до решения суда. От них напрямую зависит исход дела.',
+thxR1:'Не оформляйте новые кредиты, микрозаймы и рассрочки. Заём, взятый накануне обращения в суд, вызывает вопросы к добросовестности и способен разрушить всё дело.',
+thxR2:'Сократите необязательные расходы: рестораны, такси, подписки, крупные покупки. Всё это видно в выписке по карте, и суд оценивает картину расходов, а не только слова.',
+thxR3:'Сохраняйте документы, подтверждающие ваши ответы: договоры, чеки, выписки, справки о доходе, медицинские документы. В суде всё сказанное нужно подтвердить.',
+thxR4:'Не переоформляйте и не продавайте имущество на родственников и знакомых. Такие сделки проверяются за три года и оспариваются.',
+thxCh:'Что будет дальше',
+thxCp:'Разбор занимает от нескольких часов до одного рабочего дня. Никаких документов пока готовить не нужно — менеджер скажет, что понадобится, если процедура вам подойдёт.',
+
+disc:'Эта анкета — предварительный опрос, а не юридическая консультация и не оценка ваших шансов. Результат разбора сообщает юрист индивидуально. Восстановление платёжеспособности не списывает долг: списание задолженности происходит в процедуре банкротства.',
+own:'Анкета — собственная разработка компании $1. Ваши ответы не сохраняются на сайте и никуда не отправляются без вашего нажатия.'
+},
+
+kz:{
+tag:'Төлем қабілеттілігін қалпына келтіру · Қарыздарды есептен шығару',
+heroH:'Осы рәсім сізге қолайлы ма — біліп алыңыз',
+heroP:'Жағдайыңыз туралы бірнеше қарапайым сұраққа жауап беріңіз. Бұл шамамен бес минут алады. Заңгер жауаптарыңызды қарап, нақты сіздің жағдайыңызда не істеуге болатынын айтады.',
+slogan:'Қарыздан арылыңыз — қанатыңызды жайыңыз',
+
+aboutH:'Төлем қабілеттілігін қалпына келтіру дегеніміз не',
+aboutL:'Бұл — несиелерін төлей алмай қалған Қазақстан азаматтарына арналған заңды рәсім. Ол сот арқылы жүреді және 2023 жылдан бері қолданылады.',
+t1h:'Өндіріп алу тоқтатылады',
+t1p:'Сот ісіңізді қабылдаған сәттен бастап коллекторлардың қоңырауы мен шоттан ақша алу тоқтайды.',
+t2h:'Пайыздар өспейді',
+t2p:'Сот жоспарды бекіткеннен кейін банк қарыз бойынша сыйақы есептеуді тоқтатады.',
+t3h:'Сізге ең төменгі күнкөріс деңгейі қалады',
+t3p:'Ай сайын сізге және асырауыңыздағы еңбекке жарамсыз отбасы мүшелеріне күнкөріс минимумы қалдырылады. Бұл — заң кепілдігі.',
+t4h:'Ретсіздіктің орнына түсінікті кесте',
+t4p:'Ондаған талаптың орнына — сот бекіткен, бес жылға дейінгі бір ғана төлем жоспары.',
+honestH:'Ашығын айтайық:',
+honestP:'төлем қабілеттілігін қалпына келтіру қарызды толық есептен шығармайды — ол шамаңызға сай кесте мен өндіріп алудан қорғаныс береді. Қарыздар басқа рәсімде, банкроттықта есептен шығарылады, бірақ онда мүлік саудаға салынады. Қайсысы сізге қолайлы екенін заңгер сауалнаманы қарап шыққаннан кейін айтады.',
+
+howH:'Бәрі қалай өтеді',
+howL:'Сауалнамадан сот шешіміне дейінгі төрт қадам.',
+s1h:'Сіз сауалнаманы толтырасыз',s1p:'Дәл осы жерде, бес минутта. Бұл кезеңде ешқандай құжат керек емес.',
+s2h:'Заңгер жағдайыңызды талдайды',s2p:'Табысыңызды, қарызыңызды, мүлкіңізді және несие тарихыңызды қарайды. Содан кейін менеджер сізбен байланысып, шын мәнінде не істеуге болатынын түсіндіреді.',
+s3h:'Құжаттарды жинап, сотқа береміз',s3p:'Арыз бен қосымшаларды біз дайындаймыз, сіз тек анықтамаларды әкелесіз. Сот қаржы басқарушысын тағайындайды.',
+s4h:'Сот жоспарды бекітеді',s4p:'Сіз шамаңызға сай кестемен төлеп, өміріңізді жалғастырасыз.',
+
+coH:'Компания туралы',
+c1h:'Біз тек азаматтардың қарыздарымен айналысамыз',
+c1p:'Төлем қабілеттілігін қалпына келтіру, соттық және соттан тыс банкроттық. Бұл — жалпы тізімдегі қызметтердің бірі емес, тар мамандану.',
+c2h:'Шешімді біз емес, сот қабылдайды',
+c2p:'Біз істі ең жақсы мүмкіндігі болатындай дайындаймыз және жағдайыңыздың күшті-әлсіз тұстарын алдын ала көрсетеміз. Бірақ нәтижеге ешкім кепілдік бере алмайды: сот бас тартуы да мүмкін. Егер сізге бір жерде жүз пайыздық нәтиже уәде етсе — сізді адастырып отыр.',
+c3h:'Ресми жұмыс істейміз',
+c3p:'$1. Барлығы жазбаша шарт бойынша: қызмет түрлері, мерзімдер мен құны жұмыс басталғанға дейін бекітіледі. Ауызша уәде де, «картаға» төлем де жоқ.',
+
+formH:'Сауалнама',
+formL:'Байсалды әрі шыншыл жауап беріңіз — талдаудың дәлдігі осыған байланысты. Мұнда дұрыс емес жауап жоқ.',
+barMin:'шамамен 5 минут',
+barStep:'$2 қадамның $1-і',
+
+p1h:'Несие бойынша жағдайыңыз',p1s:'Ең қарапайымнан бастайық.',
+q1:'Қазір жеке кәсіпкер ретінде тіркелгенсіз бе?',
+q1e:'ЖК ашық тұрса, бірақ қызмет жүргізілмесе де, ол әрекеттегі болып саналады.',
+q1a:'Жоқ, мен жай жеке тұлғамын',q1b:'Иә, ЖК ашық',
+q2:'Несиені төлеуге шамаңыз жете ме?',
+q2a:'Уақытында төлеймін, шамам жетеді',q2b:'Төлеймін, бірақ кешігіп',q2c:'Енді төлемеймін',
+q3:'Мерзімі өткен берешек қашан басталды?',
+q3a:'Мерзімі өткен берешек жоқ',q3b:'Жарты жылдан аз',q3c:'Жарты жылдан бір жылға дейін',q3d:'Бір жылдан астам',
+q4:'Барлығы қанша қарызыңыз бар?',
+q4e:'Барлық несие, микрокредит және қарыз бірге. Шамамен сома жеткілікті.',
+q4b:'Барлық несие бойынша айына қанша төлеуіңіз керек?',
+q4be:'Банк кестелері бойынша — қазір төлемесеңіз де. Шамамен сома жарайды.',
+q5:'Қанша несие мен қарызыңыз бар?',
+q5a:'Бір немесе екі',q5b:'Үштен беске дейін',q5c:'Бестен көп',
+
+p2h:'Табыс және отбасы',p2s:'Бұл сізге қандай төлем шамалы болатынын түсіну үшін қажет.',
+q6:'Айына қолыңызға қанша ақша тиеді?',
+q6e:'Барлық ұстамдардан кейін нақты түсетін сома. Табысыңыз өзгеріп тұрса — орташасын жазыңыз.',
+q7:'Табысыңызды немен растай аласыз?',
+q7e:'Бір құжат жеткілікті.',
+q7a:'Жұмыс орнынан жалақы туралы анықтамамен',
+q7b:'Ішінара — табыстың бір бөлігі бейресми',
+q7c:'Әзірге ештеңемен растай алмаймын',
+q22:'Қазір кім болып жұмыс істейсіз?',
+q22e:'Жағдайыңызға ең жақынын таңдаңыз.',
+q22a:'Еңбек шарты бойынша ресми жұмыс істеймін',
+q22b:'Шартсыз, бейресми жұмыс істеймін',
+q22c:'Өзін-өзі жұмыспен қамтығанмын немесе өзіме жұмыс істеймін',
+q22d:'Зейнеткермін',
+q22e2:'Қазір жұмыс істемеймін',
+q23:'Жұбайыңыз жұмыс істей ме?',
+q23e:'Сот отбасының жалпы бюджетін қарайды, сондықтан екінші табыс туралы да сұраймыз.',
+q23a:'Иә, жұмыс істейді',q23b:'Жоқ, жұмыс істемейді',q23c:'Мен некеде емеспін',
+q23i:'Жұбайыңыздың қолына айына қанша тиеді?',
+q23ie:'Шамамен сома жарайды. Табысы өзгеріп тұрса — орташасын жазыңыз.',
+q8:'Сізді қоса есептегенде, табысыңызбен қанша адам күн көреді?',
+q8e:'Өзіңізді және есебіңізден күн көретіндерді санаңыз: 18 жасқа толмаған балаларды, зейнеткерлерді, мүгедектігі бар адамдарды. Жұмыс істейтін жұбайды мұнда санаудың қажеті жоқ — ол туралы бөлек сұрақ болды.',
+unitP:'адам',
+q9:'Атаулы әлеуметтік көмек аласыз ба?',
+q9e:'АӘК, жәрдемақы немесе халықтың әлеуметтік осал тобы мәртебесі.',
+q9a:'Иә, аламын',q9b:'Жоқ',
+
+p3h:'Мүлік',p3s:'Қай рәсім қолайлы болатыны көбіне осыған байланысты.',
+q10:'Тұрғын үйіңіз бар ма?',
+q10a:'Өз тұрғын үйім жоқ, туыстарымда тұрамын',
+q10r:'Пәтер жалдаймын',
+q10b:'Біреу, өзім тұрамын',q10c:'Біреуден көп',
+q10m:'Ипотекаңыз бар ма?',
+q10me:'Тұрғын үй банкке кепілге қойылған кез келген несие.',
+q10ma:'Жоқ',q10mb:'Иә, бар',
+q11:'Көлігіңіз бар ма?',
+q11e:'Сізге рәсімделген автокөлік.',
+q11a:'Көлік жоқ',q11b:'Біреу',q11c:'Екеу және одан көп',
+q11l:'Көлік несиеде немесе кепілде ме?',
+q11le:'Автонесие, лизинг, көлікті кепілге қойып алынған қарыз.',
+q11la:'Жоқ, көлік таза',q11lb:'Иә, несиеде немесе кепілде',
+q11s:'Қажет болса, көлікті сатуға дайынсыз ба?',
+q11se:'Кейде бір нысанды сату істі сіздің пайдаңызға шешеді. Шыншыл жауап беріңіз — стратегия соған байланысты.',
+q11sa:'Иә, дайынмын',q11sb:'Басқа жол болмаған жағдайда ғана',q11sc:'Жоқ, дайын емеспін',
+q13:'Соңғы үш жылда мүлікті сатқан немесе сыйға берген кезіңіз болды ма?',
+q13e:'Пәтер, көлік, жер, үлес. Сұрап отырғанымыз — мұндай мәмілелер рәсім барысында тексеріледі.',
+q13a:'Жоқ',q13b:'Иә, болды',
+q13w:'Сатудан түскен ақша неге жұмсалды?',
+q13we:'Бұл сату фактісінің өзінен маңыздырақ. Ақша несиені өтеуге кеткен болса — сұрақ туындамайды деуге болады.',
+q13w1:'Несиелер мен қарыздарды өтеуге',q13w2:'Басқа мақсаттарға',
+
+p4h:'Қарыз қайдан пайда болды',p4s:'Айыптамай сұраймыз. Мұндай жағдайға мыңдаған адам тап болады және оның әрдайым дерлік түсіндірмесі бар.',
+q14:'Қарыз ақша неге жұмсалды?',
+q14e:'Қолайлысының бәрін белгілеңіз.',
+g1:'Емделу',g2:'Оқу',g3:'Тұрғын үй және жөндеу',g4:'Туыстарға көмек',g5:'Өз ісім',g6:'Басқа несиені жабу',g7:'Ірі сатып алулар',g8:'Сапар, той',g9:'Есімде жоқ',
+q15:'Құжаттар мен түбіртектер сақталды ма?',
+q15e:'Шарттар, көшірмелер, клиника немесе дүкен түбіртектері.',
+q15a:'Иә, барлығы дерлік сақталды',q15b:'Ішінара',q15c:'Ештеңе қалмады',
+q16:'Соңғы жылда ставкаға немесе онлайн-ойындарға аударым болды ма?',
+q16e:'Шыныңызды айтыңыз: бұл банк көшірмесінде көрінеді, біз мұны сотта емес, алдын ала білгеніміз жөн.',
+q16a:'Жоқ, болған жоқ',q16b:'Иә, болды',
+q17:'Карталарыңыз арқылы жалақыңыздан әлдеқайда көп сома өтті ме?',
+q17e:'Мысалы, біреудің атынан ақша алып, аударып отырдыңыз.',
+q17a:'Жоқ',q17b:'Иә, болды',
+q24:'Соңғы үш жылда шетелге шықтыңыз ба?',
+q24e:'Сұрап отырғанымыз — шығу белгілері көрініп тұрады және сотта талқылануы мүмкін.',
+q24a:'Жоқ, шықпадым',q24b:'Иә, шықтым',
+q24w:'Шығу мақсаты қандай болды?',
+q24we:'Сапар бірнеше рет болса — негізгі себебін белгілеңіз.',
+q24w1:'Емделу',q24w2:'Жұмыс немесе іссапар',q24w3:'Оқу',
+q24w4:'Туыстарға бару',q24w5:'Демалыс, туризм',q24w6:'Басқа себеп',
+
+p5h:'Сізбен қалай байланысамыз',p5s:'Соңғы қадам қалды. Менеджер қоңырау шалып, талдау нәтижесін айтады.',
+q18:'Тегіңіз бен атыңыз',ph18:'Мұратов Айдос',
+q19:'Телефон нөмірі',q19e:'Осы нөмірге менеджер қоңырау шалады.',ph19:'+7 (___) ___-__-__',
+q20:'Қалаңыз',ph20:'Алматы',
+q21:'Қоңырауды қашан қабылдау ыңғайлы?',
+q21a:'Кез келген уақытта',q21b:'Түскі асқа дейін',q21c:'Түстен кейін',
+agree:'Кеңес алу үшін жеке деректерімді өңдеуге келісім беремін. Деректер тек менімен байланысу үшін пайдаланылады және үшінші тұлғаларға берілмейді.',
+agree2:'Сұрақтарға шындықты жауап бергенімді және айтқанымды құжатпен растай алатынымды растаймын. Талдау менің жауаптарыма негізделетінін және олардың дұрыстығы үшін жауапкершілік өзімде екенін түсінемін.',
+wAgree2:'Жауаптардың дұрыстығын растаңыз',
+
+btnNext:'Әрі қарай',btnBack:'Артқа',btnSend:'Сауалнаманы жіберу',
+wNeed:'Осы қадамдағы барлық сұраққа жауап беріңізші',
+wDebt:'Қарыздың шамамен сомасын көрсетіңіз',
+wCur:'Несие бойынша шамамен төлемді көрсетіңіз',
+wInc:'Табысыңызды көрсетіңіз',
+wSpInc:'Жұбайыңыздың табысын көрсетіңіз',
+wDeps:'Өзіңізді қоса, табысыңызбен қанша адам күн көретінін көрсетіңіз',
+calcH:'Жауаптарыңыз бойынша алдын ала есеп',
+cNew:'Жаңа төлем — артық емес',
+cCur:'Қазір банк кестелері бойынша',
+cDiff:'Ай сайын босайды',
+cTotal:'Жоспардың бүкіл мерзімінде төлейсіз',
+cRest:'Жоспардан кейін қалатын қарыз',
+cSave:'Пайыз бен өсімпұл түрінде артық төлемейсіз — шамамен',
+calcN:'Бұл — жауаптарыңыз бойынша алдын ала бағалау, түпкілікті есеп емес. Нақты сомалар мен мерзімді жоспарды бекіту кезінде сот белгілейді, олар өзгеше болуы мүмкін. Рәсімнен кейін қарыз қалдығы сақталады: төлем қабілеттілігін қалпына келтіру берешекті есептен шығармайды.',
+wFio:'Тегіңіз бен атыңызды жазыңыз',
+wTel:'Телефон нөмірін жазыңыз',
+wAgree:'Деректерді өңдеуге келісімді белгілеңіз',
+
+thxH:'Рақмет, $1!',
+thxP1:'Сауалнамаңыз толтырылды. Заңгер оны қарап, нәтижесін менеджерге береді.',
+thxP2:'Менеджер көрсетілген нөмірге хабарласып, жағдайыңызда не істеуге болатынын айтады.',
+btnWa:'Сауалнаманы менеджерге жіберу',
+waHint:'Дайын хабарламасы бар WhatsApp ашылады — сізге тек «Жіберу» түймесін басу қалады.',
+thxRh:'Дәл қазірден бастап не істеу маңызды',
+thxRl:'Бұл ережелер бүгіннен бастап сот шешіміне дейін қолданылады. Істің нәтижесі тікелей соларға байланысты.',
+thxR1:'Жаңа несие, микрокредит және бөліп төлеу рәсімдемеңіз. Сотқа жүгінер алдында алынған қарыз адалдыққа күмән тудырып, бүкіл істі бұзуы мүмкін.',
+thxR2:'Міндетті емес шығындарды қысқартыңыз: мейрамхана, такси, жазылымдар, ірі сатып алулар. Мұның бәрі карта үзіндісінде көрінеді, ал сот сөзді ғана емес, шығын көрінісін бағалайды.',
+thxR3:'Жауаптарыңызды растайтын құжаттарды сақтаңыз: шарттар, чектер, үзінділер, табыс туралы анықтамалар, медициналық құжаттар. Сотта айтылғанның бәрін растау керек.',
+thxR4:'Мүлікті туыстарыңызға немесе таныстарыңызға қайта рәсімдемеңіз және сатпаңыз. Мұндай мәмілелер үш жыл бойы тексеріліп, даулануы мүмкін.',
+thxCh:'Бұдан әрі не болады',
+thxCp:'Талдау бірнеше сағаттан бір жұмыс күніне дейін уақыт алады. Әзірге ешқандай құжат дайындаудың қажеті жоқ — рәсім қолайлы болса, менеджер не керегін айтады.',
+
+disc:'Бұл сауалнама — алдын ала сауалнама, заңгерлік кеңес те, мүмкіндігіңізді бағалау да емес. Талдау нәтижесін заңгер жеке хабарлайды. Төлем қабілеттілігін қалпына келтіру қарызды есептен шығармайды: берешекті есептен шығару банкроттық рәсімінде жүреді.',
+own:'Сауалнама — $1 компаниясының меншікті әзірлемесі. Жауаптарыңыз сайтта сақталмайды және сіз баспайынша еш жаққа жіберілмейді.'
+}
+};
+
+/* ============================================================
+   УТИЛИТЫ
+   ============================================================ */
+function t(k){return (T[lang]&&T[lang][k])||T.ru[k]||''}
+function fmtNum(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
+function clean(s){s=String(s).replace(/ /g,' ');s=s.replace(/[.,]\d{1,2}\s*$/,'');return s.replace(/\D/g,'')}
+function numOf(id){var v=clean($(id).value);return v?parseInt(v,10):0}
+function money(n){return fmtNum(Math.round(n))+' ₸'}
+function radio(name){var e=document.querySelector('input[name="'+name+'"]:checked');return e?e.value:''}
+function radioLabel(name){var e=document.querySelector('input[name="'+name+'"]:checked');return e?e.parentNode.querySelector('span').textContent:'—'}
+
+function applyLang(){
+  document.documentElement.lang=lang==='kz'?'kk':'ru';
+  var els=document.querySelectorAll('[data-i]');
+  for(var i=0;i<els.length;i++){els[i].textContent=t(els[i].getAttribute('data-i'))}
+  var ph=document.querySelectorAll('[data-ip]');
+  for(var j=0;j<ph.length;j++){ph[j].placeholder=t(ph[j].getAttribute('data-ip'))}
+  $('lRu').className=lang==='ru'?'on':'';
+  $('lKz').className=lang==='kz'?'on':'';
+  $('coLead').textContent=buildCoLead();
+  $('c3p').textContent=t('c3p').replace('$1',CONFIG.legalName);
+  $('fCo').textContent=CONFIG.legalName+(CONFIG.bin?' · БИН '+CONFIG.bin:'');
+  var c=[];
+  if(CONFIG.phoneShow)c.push(CONFIG.phoneShow);
+  if(CONFIG.email)c.push(CONFIG.email);
+  if(CONFIG.site)c.push(CONFIG.site);
+  if(CONFIG.address)c.push(CONFIG.address);
+  $('fContacts').textContent=c.join(' · ');
+  /* кнопка WhatsApp появляется, только если задан номер */
+  var waBox=$('wa').parentNode;
+  waBox.style.display=CONFIG.whatsapp?'':'none';
+  document.querySelector('[data-i="own"]').textContent=t('own').replace('$1',CONFIG.company);
+  updBar();
+  paint();
+}
+function buildCoLead(){
+  return lang==='kz'
+    ? CONFIG.company+' — қарыз мәселесі бойынша заң көмегі'+(CONFIG.years?', '+CONFIG.years:'')+'.'
+    : CONFIG.company+' — юридическая помощь по долгам'+(CONFIG.years?', '+CONFIG.years:'')+'.';
+}
+
+function updBar(){
+  $('barFill').style.width=(step/TOTAL*100)+'%';
+  $('barStep').textContent=t('barStep').replace('$1',step).replace('$2',TOTAL);
+}
+function paint(){
+  var ls=document.querySelectorAll('.ch label, .chips label');
+  for(var i=0;i<ls.length;i++){
+    var inp=ls[i].querySelector('input');
+    if(inp&&inp.checked)ls[i].classList.add('on');else ls[i].classList.remove('on');
+  }
+}
+function show(n){
+  step=n;
+  var ss=document.querySelectorAll('.stp');
+  for(var i=0;i<ss.length;i++)ss[i].classList.toggle('on',ss[i].getAttribute('data-s')==String(n));
+  updBar();
+  var box=$('wizBox');
+  var head=document.querySelector('.top');
+  var off=(head?head.offsetHeight:0)+16;
+  var y=box.getBoundingClientRect().top+window.pageYOffset-off;
+  window.scrollTo({top:y<0?0:y,behavior:'smooth'});
+}
+function warn(n,msg){
+  var w=document.querySelector('.stp[data-s="'+n+'"] [data-w]');
+  if(w)w.textContent=msg||'';
+}
+
+/* ---------- валидация шагов ---------- */
+function validate(n){
+  warn(n,'');
+  if(n===1){
+    if(!radio('ip')||!radio('pay')||!radio('over')||!radio('cnt')){warn(n,t('wNeed'));return false}
+    if(!numOf('debt')){warn(n,t('wDebt'));return false}
+    if(!numOf('curpay')){warn(n,t('wCur'));return false}
+  }
+  if(n===2){
+    if(!numOf('income')){warn(n,t('wInc'));return false}
+    if(!radio('proof')||!radio('susn')||!radio('empl')||!radio('sp')){warn(n,t('wNeed'));return false}
+    if(radio('sp')==='yes'&&!numOf('spinc')){warn(n,t('wSpInc'));return false}
+    if(!numOf('deps')){warn(n,t('wDeps'));return false}
+  }
+  if(n===3){
+    if(!radio('home')||!radio('mort')||!radio('prop')||!radio('sold')){warn(n,t('wNeed'));return false}
+    if(radio('prop')!=='no'&&(!radio('carloan')||!radio('carsell'))){warn(n,t('wNeed'));return false}
+    if(radio('sold')==='yes'&&!radio('soldw')){warn(n,t('wNeed'));return false}
+  }
+  if(n===4){
+    if(!radio('docs')||!radio('bet')||!radio('turn')||!radio('trip')){warn(n,t('wNeed'));return false}
+    if(radio('trip')==='yes'&&!radio('tripw')){warn(n,t('wNeed'));return false}
+  }
+  if(n===5){
+    if(!$('fio').value.trim()){warn(n,t('wFio'));return false}
+    if($('tel').value.replace(/\D/g,'').length<10){warn(n,t('wTel'));return false}
+    if(!radio('when')){warn(n,t('wNeed'));return false}
+    if(!$('agree').checked){warn(n,t('wAgree'));return false}
+    if(!$('agree2').checked){warn(n,t('wAgree2'));return false}
+  }
+  return true;
+}
+
+/* ============================================================
+   СЛУЖЕБНЫЙ БАЛЛ — клиент его не видит, он уходит менеджеру
+   ============================================================ */
+function score(){
+  var own=numOf('income'), spInc=(radio('sp')==='yes'?numOf('spinc'):0);
+  var income=own+spInc;                       /* совокупный доход семьи */
+  var debt=numOf('debt'), deps=Math.max(numOf('deps'),1);
+  var goals=[];var gs=$('goals').querySelectorAll('input:checked');
+  for(var i=0;i<gs.length;i++)goals.push(gs[i].value);
+
+  var stops=[];
+  if(radio('ip')==='yes')stops.push('ИП не снят');
+  if(radio('bet')==='yes')stops.push('ставки/казино');
+  if(radio('proof')==='no')stops.push('доход не подтверждается — нет основания по ст. 6');
+  if(radio('sold')==='yes'&&radio('soldw')==='other')stops.push('продажа имущества за 3 года, деньги не на кредиты');
+  if(radio('mort')==='yes')stops.push('ипотека — дела с ипотекой пока не берём');
+
+  var prot=PM*deps+(radio('sp')==='yes'?PM:0), spr=Math.max(income-prot,0), R=spr*TERM;
+  var cov=debt?R/debt*100:0;
+  if(!stops.length&&spr<=0)stops.push('свободного ресурса нет');
+
+  /* платёж по плану: не выше свободного ресурса и не выше того, что нужно для полного гашения */
+  var curPay=numOf('curpay');
+  var need=debt/TERM;
+  var newPay=Math.min(spr,need);
+  var totalPlan=Math.round(newPay*TERM);
+  var rest=Math.max(debt-totalPlan,0);
+  var diff=Math.max(curPay-newPay,0);
+  /* Переплата, которую клиент не отдаст.
+     Сравниваем не с полными 60 месяцами, а с тем, сколько реально шёл бы текущий график:
+     основной долг делим на платёж и добавляем запас на проценты (коэффициент OVERHEAD).
+     Иначе клиенту с коротким графиком показалась бы завышенная экономия. */
+  var OVERHEAD=1.5;
+  var monthsCur=curPay?Math.min(TERM,Math.ceil(debt/curPay*OVERHEAD)):0;
+  var save=Math.max(curPay*monthsCur-debt,0);
+
+  var econ={curPay:curPay,newPay:Math.round(newPay),totalPlan:totalPlan,diff:Math.round(diff),save:Math.round(save)};
+  if(stops.length)return{stop:stops,score:0,spr:spr,R:R,cov:cov,rest:rest,prot:prot,goals:goals,e:econ};
+
+  var s=50;
+  /* имущество */
+  var home=radio('home'),prop=radio('prop');
+  var extra=(prop==='one'?1:prop==='many'?2:0)+(home==='many'?1:0);
+  if(extra>=2)s-=30; else if(extra===1)s-=15; else if(home==='one')s+=15; else s+=25;
+  /* автомобиль: кредит утяжеляет, готовность продать снимает риск по ст. 30 */
+  if(prop!=='no'){
+    if(radio('carloan')==='yes')s-=10;
+    var cs=radio('carsell');s+=(cs==='yes'?10:cs==='maybe'?5:-15);
+  }
+  /* происхождение долга */
+  if(goals.indexOf('idk')>-1||goals.length===0)s-=25;
+  else{var d=radio('docs');s+=(d==='yes'?15:d==='part'?10:5)}
+  if(goals.indexOf('lux')>-1)s-=20;
+  if(radio('turn')==='yes')s-=20;
+  /* выезд за границу: важна причина, а не сам факт */
+  if(radio('trip')==='yes'){var tw=radio('tripw');s+=(tw==='rest'?-20:tw==='other'?-10:0)}
+  /* платёжная дисциплина — признак добросовестности */
+  var pay=radio('pay');s+=(pay==='ok'?10:pay==='late'?5:0);
+  /* доход и профиль */
+  var pf=radio('proof');s+=(pf==='spr'?10:pf==='part'?-10:0);
+  /* форма занятости — устойчивость дохода по ст. 6 */
+  var em=radio('empl');s+=(em==='off'?5:em==='pens'?5:em==='self'?0:em==='unoff'?-5:-10);
+  /* второй доход в семье делает план исполнимее */
+  if(radio('sp')==='yes'&&spInc>0)s+=5;
+  if(radio('susn')==='yes')s+=15;
+  if(deps>0)s+=Math.min(deps,2)*3;
+  /* покрытие */
+  s+=cov>=50?20:cov>=25?10:cov>=10?0:-15;
+
+  return{stop:[],score:Math.max(5,Math.min(95,s)),spr:spr,R:R,cov:cov,rest:rest,prot:prot,goals:goals,e:econ};
+}
+
+/* структура для таблицы: ключ = заголовок колонки */
+function dataObj(){
+  var r=score(),d=new Date(),p=function(x){return x<10?'0'+x:x};
+  var goalNames=r.goals.map(function(v){
+    var el=$('goals').querySelector('input[value="'+v+'"]');
+    return el?el.parentNode.querySelector('span').textContent:v;
+  }).join(', ');
+  var pct=function(n){return (Math.round(n*10)/10).toString().replace('.',',')};
+  return {
+    'Дата':p(d.getDate())+'.'+p(d.getMonth()+1)+'.'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes()),
+    'Вердикт':r.stop.length?'СТОП':(r.score>=70?'Берём':r.score>=55?'Берём с оговоркой':r.score>=40?'Юрист':'Не ВП'),
+    'Шанс одобрения %':r.stop.length?0:r.score,
+    'Причина стопа':r.stop.join('; '),
+    'ФИО':$('fio').value.trim(),
+    'Телефон':$('tel').value.trim(),
+    'Город':$('city').value.trim(),
+    'Когда звонить':radioLabel('when'),
+    'Язык':lang==='kz'?'қазақша':'русский',
+    'Долг':numOf('debt'),
+    'Доход':numOf('income'),
+    'Платёж сейчас':r.e.curPay,
+    'Новый платёж':r.e.newPay,
+    'Освободится в месяц':r.e.diff,
+    'Заплатит по плану':r.e.totalPlan,
+    'Остаток долга':Math.round(r.rest),
+    'Экономия на переплате':r.e.save,
+    'Доход покрывает платёж':(r.e.curPay&&r.e.curPay<=r.spr)?'да':'нет',
+    'Иждивенцев':numOf('deps'),
+    'Свободный ресурс':Math.round(r.spr),
+    'Ресурс плана':Math.round(r.R),
+    'Покрытие %':pct(r.cov),
+    'ИП':radioLabel('ip'),
+    'Платежи':radioLabel('pay'),
+    'Просрочка':radioLabel('over'),
+    'Кредитов':radioLabel('cnt'),
+    'Подтверждение дохода':radioLabel('proof'),
+    'АСП/СУСН':radioLabel('susn'),
+    'Занятость':radioLabel('empl'),
+    'Супруг работает':radioLabel('sp'),
+    'Доход супруга':radio('sp')==='yes'?numOf('spinc'):0,
+    'Совокупный доход':numOf('income')+(radio('sp')==='yes'?numOf('spinc'):0),
+    'Жильё':radioLabel('home'),
+    'Ипотека':radioLabel('mort'),
+    'Машина':radioLabel('prop'),
+    'Машина в кредите':radio('prop')!=='no'?radioLabel('carloan'):'',
+    'Готов продать машину':radio('prop')!=='no'?radioLabel('carsell'):'',
+    'Сделки за 3 года':radioLabel('sold'),
+    'Деньги от продажи':radio('sold')==='yes'?radioLabel('soldw'):'',
+    'Цели займов':goalNames,
+    'Документы':radioLabel('docs'),
+    'Ставки':radioLabel('bet'),
+    'Обороты по картам':radioLabel('turn'),
+    'Выезд за 3 года':radioLabel('trip'),
+    'Причина выезда':radio('trip')==='yes'?radioLabel('tripw'):'',
+    'Статус':'Новая'
+  };
+}
+
+function payload(){
+  var r=score(),d=new Date(),p=function(x){return x<10?'0'+x:x};
+  var goalNames=r.goals.map(function(v){
+    var el=$('goals').querySelector('input[value="'+v+'"]');
+    return el?el.parentNode.querySelector('span').textContent:v;
+  }).join(', ');
+  return 'НОВАЯ АНКЕТА · '+CONFIG.company+'\n'
+    +p(d.getDate())+'.'+p(d.getMonth()+1)+'.'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes())+'\n'
+    +'——————————————\n'
+    +'ФИО: '+$('fio').value.trim()+'\n'
+    +'Телефон: '+$('tel').value.trim()+'\n'
+    +'Город: '+($('city').value.trim()||'—')+'\n'
+    +'Звонить: '+radioLabel('when')+'\n'
+    +'Язык анкеты: '+(lang==='kz'?'қазақша':'русский')+'\n'
+    +'——————————————\n'
+    +'ИП: '+radioLabel('ip')+'\n'
+    +'Платежи: '+radioLabel('pay')+'\n'
+    +'Просрочка: '+radioLabel('over')+'\n'
+    +'Долг: '+money(numOf('debt'))+'\n'
+    +'Платёж сейчас: '+money(numOf('curpay'))+'\n'
+    +'Кредитов: '+radioLabel('cnt')+'\n'
+    +'Доход: '+money(numOf('income'))+'\n'
+    +'Подтверждение дохода: '+radioLabel('proof')+'\n'
+    +'Иждивенцев: '+numOf('deps')+'\n'
+    +'АСП/СУСН: '+radioLabel('susn')+'\n'
+    +'Занятость: '+radioLabel('empl')+'\n'
+    +'Супруг работает: '+radioLabel('sp')+(radio('sp')==='yes'?' — доход: '+money(numOf('spinc')):'')+'\n'
+    +'Жильё: '+radioLabel('home')+'\n'
+    +'Ипотека: '+radioLabel('mort')+'\n'
+    +'Машина: '+radioLabel('prop')+(radio('prop')!=='no'?' — в кредите: '+radioLabel('carloan')+'; готов продать: '+radioLabel('carsell'):'')+'\n'
+    +'Сделки за 3 года: '+radioLabel('sold')+(radio('sold')==='yes'?' — деньги: '+radioLabel('soldw'):'')+'\n'
+    +'Цели займов: '+(goalNames||'не указано')+'\n'
+    +'Документы: '+radioLabel('docs')+'\n'
+    +'Ставки: '+radioLabel('bet')+'\n'
+    +'Обороты по картам: '+radioLabel('turn')+'\n'
+    +'Выезд за 3 года: '+radioLabel('trip')+(radio('trip')==='yes'?' — причина: '+radioLabel('tripw'):'')+'\n'
+    +'——————————————\n'
+    +'СЛУЖЕБНОЕ (клиенту не сообщать)\n'
+    +(r.stop.length
+        ? 'СТОП: '+r.stop.join('; ')+'\n'
+        : 'Балл: '+r.score+'%\n')
+    +'Свободный ресурс: '+money(r.spr)+'/мес\n'
+    +'Новый платёж: '+money(r.e.newPay)+'/мес (освободится '+money(r.e.diff)+')\n'
+    +'Заплатит по плану: '+money(r.e.totalPlan)+' ('+(Math.round(r.cov*10)/10).toString().replace('.',',')+'% ресурса)\n'
+    +'Остаток долга после плана: '+money(r.rest)+'\n'
+    +'Экономия на переплате: '+money(r.e.save);
+}
+
+/* ============================================================
+   ОТПРАВКА
+   ============================================================ */
+function sendToSheet(){
+  if(!CONFIG.webhook)return;
+  var body=JSON.stringify(dataObj());
+  try{
+    fetch(CONFIG.webhook,{
+      method:'POST',mode:'no-cors',keepalive:true,
+      headers:{'Content-Type':'text/plain;charset=utf-8'},body:body
+    })['catch'](function(){});
+  }catch(e){
+    try{
+      if(navigator.sendBeacon)navigator.sendBeacon(CONFIG.webhook,new Blob([body],{type:'text/plain;charset=utf-8'}));
+    }catch(e2){}
+  }
+}
+
+function finish(){
+  var text=payload();
+  sendToSheet();
+  var name=$('fio').value.trim().split(/\s+/).slice(-1)[0]||$('fio').value.trim();
+  $('thxH').textContent=t('thxH').replace('$1',name);
+
+  /* карточка с цифрами — только если план вообще возможен */
+  var r=score();
+  if(!r.stop.length&&r.e.newPay>0){
+    $('cNewV').textContent=money(r.e.newPay);
+    $('cCurV').textContent=r.e.curPay?money(r.e.curPay):'—';
+    $('cDiffV').textContent=money(r.e.diff);
+    $('rDiff').style.display=r.e.diff>0?'':'none';
+    $('cTotalV').textContent=money(r.e.totalPlan);
+    $('cRestV').textContent=money(r.rest);
+    $('cSaveV').textContent=money(r.e.save);
+    $('rSave').style.display=r.e.save>0?'':'none';
+    $('calcCard').style.display='';
+  } else {
+    $('calcCard').style.display='none';
+  }
+  $('rulesCard').style.display=r.stop.length?'none':'';
+  $('wizBox').style.display='none';
+  $('thx').classList.add('on');
+  $('wa').onclick=function(){
+    window.open('https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(text),'_blank');
+  };
+  var head=document.querySelector('.top');
+  var y=$('thx').getBoundingClientRect().top+window.pageYOffset-((head?head.offsetHeight:0)+16);
+  window.scrollTo({top:y<0?0:y,behavior:'smooth'});
+}
+
+/* ============================================================
+   СОБЫТИЯ
+   ============================================================ */
+['debt','curpay','income','spinc','deps'].forEach(function(id){
+  var el=$(id);
+  el.addEventListener('input',function(){
+    var caret=el.selectionStart===null?el.value.length:el.selectionStart;
+    var before=el.value.slice(0,caret).replace(/\D/g,'').length;
+    var raw=clean(el.value);
+    el.value=raw?fmtNum(parseInt(raw,10)):'';
+    var pos=0,seen=0;
+    while(pos<el.value.length&&seen<before){if(/\d/.test(el.value.charAt(pos)))seen++;pos++}
+    try{el.setSelectionRange(pos,pos)}catch(e){}
+    warn(step,'');
+  });
+});
+$('tel').addEventListener('input',function(){warn(step,'')});
+$('fio').addEventListener('input',function(){warn(step,'')});
+
+document.addEventListener('change',function(e){
+  if(e.target&&e.target.type&&(e.target.type==='radio'||e.target.type==='checkbox')){
+    paint();warn(step,'');
+    if(e.target.name==='prop'){
+      var carOn=e.target.value!=='no';
+      $('carBox').style.display=carOn?'':'none';
+      $('carSellBox').style.display=carOn?'':'none';
+      if(!carOn){var cr=document.querySelectorAll('input[name=carloan],input[name=carsell]');for(var a=0;a<cr.length;a++)cr[a].checked=false;paint()}
+    }
+    if(e.target.name==='sp'){
+      var spOn=e.target.value==='yes';
+      $('spBox').style.display=spOn?'':'none';
+      if(!spOn)$('spinc').value='';
+    }
+    if(e.target.name==='trip'){
+      var trOn=e.target.value==='yes';
+      $('tripWhy').style.display=trOn?'':'none';
+      if(!trOn){var tr=document.querySelectorAll('input[name=tripw]');for(var b=0;b<tr.length;b++)tr[b].checked=false;paint()}
+    }
+    if(e.target.name==='sold'){
+      var on=e.target.value==='yes';
+      $('soldWhy').style.display=on?'':'none';
+      if(!on){var rs=document.querySelectorAll('input[name=soldw]');for(var k=0;k<rs.length;k++)rs[k].checked=false;paint()}
+    }
+  }
+});
+
+var nexts=document.querySelectorAll('[data-next]');
+for(var i=0;i<nexts.length;i++)nexts[i].addEventListener('click',function(){
+  if(validate(step))show(Math.min(step+1,TOTAL));
+});
+var prevs=document.querySelectorAll('[data-prev]');
+for(var j=0;j<prevs.length;j++)prevs[j].addEventListener('click',function(){warn(step,'');show(Math.max(step-1,1))});
+
+$('submit').addEventListener('click',function(){if(validate(5))finish()});
+$('lRu').addEventListener('click',function(){lang='ru';applyLang()});
+$('lKz').addEventListener('click',function(){lang='kz';applyLang()});
+
+applyLang();
+})();
+</script>
+</body>
+</html>
